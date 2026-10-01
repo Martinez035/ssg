@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Panel privado del Sistema de Gestión de Gastos (SGG)">
+  <title>Panel de Gastos - SGG</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="barra">
+    <h1>Sistema de Gestión de Gastos</h1>
+    <div class="barra-acciones">
+      <span id="usuario-activo" class="usuario"></span>
+      <button type="button" id="btn-tema" class="btn btn-secundario" aria-pressed="false">Modo noche</button>
+      <button type="button" id="btn-salir" class="btn btn-secundario">Cerrar sesión</button>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <section class="tarjeta resumen" aria-labelledby="titulo-resumen">
+      <h2 id="titulo-resumen">Total gastado</h2>
+      <p id="total-gastado" class="total" aria-live="polite">$ 0,00</p>
+    </section>
+
+    <section class="tarjeta" aria-labelledby="titulo-form">
+      <h2 id="titulo-form">Cargar gasto</h2>
+      <form id="form-gasto" novalidate>
+        <input type="hidden" id="gasto-id">
+        <div class="campo">
+          <label for="monto">Monto</label>
+          <input type="number" id="monto" name="monto" min="0.01" step="0.01" inputmode="decimal" required aria-describedby="err-monto">
+          <p class="error" id="err-monto" role="alert"></p>
+        </div>
+        <div class="campo">
+          <label for="fecha">Fecha</label>
+          <input type="date" id="fecha" name="fecha" required aria-describedby="err-fecha">
+          <p class="error" id="err-fecha" role="alert"></p>
+        </div>
+        <div class="campo">
+          <label for="categoria">Categoría</label>
+          <select id="categoria" name="categoria" required aria-describedby="err-categoria">
+            <option value="">Seleccionar...</option>
+            <option value="Alimentación">Alimentación</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Servicios">Servicios</option>
+            <option value="Ocio">Ocio</option>
+          </select>
+          <p class="error" id="err-categoria" role="alert"></p>
+        </div>
+        <div class="campo">
+          <label for="descripcion">Descripción</label>
+          <input type="text" id="descripcion" name="descripcion" maxlength="120" required aria-describedby="err-descripcion">
+          <p class="error" id="err-descripcion" role="alert"></p>
+        </div>
+        <div class="fila-botones">
+          <button type="submit" id="btn-guardar" class="btn btn-primario">Guardar gasto</button>
+          <button type="button" id="btn-cancelar" class="btn btn-secundario" hidden>Cancelar edición</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="tarjeta" aria-labelledby="titulo-historial">
+      <h2 id="titulo-historial">Historial de gastos</h2>
+      <p id="mensaje-vacio" class="vacio" hidden>Todavía no cargaste gastos.</p>
+      <div class="tabla-scroll">
+        <table id="tabla-gastos">
+          <caption class="solo-lectura">Listado de gastos activos del usuario</caption>
+          <thead>
+            <tr>
+              <th scope="col">Fecha</th>
+              <th scope="col">Categoría</th>
+              <th scope="col">Descripción</th>
+              <th scope="col" class="num">Monto</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="cuerpo-tabla"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="modal-eliminar" aria-labelledby="modal-titulo">
+    <h2 id="modal-titulo">Confirmar eliminación</h2>
+    <p id="modal-texto">¿Seguro que querés eliminar este gasto?</p>
+    <div class="fila-botones">
+      <button type="button" id="modal-confirmar" class="btn btn-peligro">Sí, eliminar</button>
+      <button type="button" id="modal-cancelar" class="btn btn-secundario">Cancelar</button>
+    </div>
+  </dialog>
+
+  <script src="js/gastos.js"></script>
+</body>
+</html>
